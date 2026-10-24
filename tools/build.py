@@ -55,7 +55,7 @@ def clubs(data):
     return out, {it["key"]: it for it in items}
 
 
-def card(it, by_key, club):
+def card(it, by_key):
     nxt = it.get("next") or {}
     target = by_key.get(nxt.get("key"))
     s = (
@@ -64,7 +64,7 @@ def card(it, by_key, club):
         f'<img src="{e(it.get("appIcon"))}" alt="" width="48" height="48" loading="lazy">'
         '<span class="q-body">'
         f'<span class="q-name">{e(it.get("name"))} <small>{e(it.get("en"))}</small>'
-        + ('<span class="q-also">兼部</span>' if it.get("group") != club else "")
+        + ('<span class="q-also">兼部</span>' if it.get("also") else "")  # 兼部のツールは、どの部でも印
         + "</span>"
         f'<span class="q-copy">{e(it.get("copy"))}</span>'
         f'<span class="q-lead">{e(it.get("lead") or it.get("desc"))}</span>'
@@ -87,7 +87,7 @@ def render(data):
             f'  <section class="club" id="club-{e(g["key"])}">'
             f'<h2 class="club-head">{e(g.get("label"))}</h2>'
             + (f'<p class="club-desc">{e(g.get("desc"))}</p>' if g.get("desc") else "")
-            + '<ul class="q-list">' + "".join(card(it, by_key, g["key"]) for it in members) + "</ul></section>"
+            + '<ul class="q-list">' + "".join(card(it, by_key) for it in members) + "</ul></section>"
         )
     parts.append("</div>")
     snapshot = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")

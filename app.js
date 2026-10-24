@@ -35,7 +35,7 @@
     return { groups: out, byKey: new Map(items.map((it) => [it.key, it])) };
   }
 
-  function card(it, byKey, club) {
+  function card(it, byKey) {
     const li = el("li", { class: "q-card", style: `--q: ${it.qColor || it.color || ""}` }, [
       el("a", { class: "q-main", href: it.url }, [
         el("img", { src: it.appIcon, alt: "", width: "48", height: "48", loading: "lazy" }),
@@ -43,7 +43,7 @@
           el("span", { class: "q-name" }, [
             document.createTextNode(`${it.name} `),
             el("small", { text: it.en }),
-            it.group !== club ? el("span", { class: "q-also", text: "兼部" }) : null
+            Array.isArray(it.also) && it.also.length ? el("span", { class: "q-also", text: "兼部" }) : null // 兼部のツールは、どの部でも印
           ]),
           el("span", { class: "q-copy", text: it.copy }),
           el("span", { class: "q-lead", text: it.lead || it.desc })
@@ -75,7 +75,7 @@
         el("section", { class: "club", id: `club-${g.key}` }, [
           el("h2", { class: "club-head", text: g.label }),
           g.desc ? el("p", { class: "club-desc", text: g.desc }) : null,
-          el("ul", { class: "q-list" }, members.map((it) => card(it, byKey, g.key)))
+          el("ul", { class: "q-list" }, members.map((it) => card(it, byKey)))
         ])
       )
     ]);
