@@ -65,6 +65,10 @@ a { color: inherit; }
   box-shadow: var(--ls-shadow);
 }
 .q-main img { width: 48px; height: 48px; border-radius: 12px; }
+.q-also {
+  display: inline-block; margin-left: 6px; padding: 0 7px; border-radius: 999px; vertical-align: 2px;
+  background: var(--ls-surface-sub); border: 1px solid var(--ls-line); color: var(--ls-subtext); font-size: 10px; font-weight: 700;
+}
 .q-copy { color: var(--q, var(--ls-accent-ink)); font-size: 14px; font-weight: 800; }
 .q-next {
   display: flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 10px; border-radius: var(--ls-radius-sm);

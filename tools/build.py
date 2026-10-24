@@ -34,6 +34,11 @@ def short_label(label):
     return re.sub(r"\s*〜.*〜\s*$", "", label or "")
 
 
+def in_club(it, key):
+    # group が元の部。also は兼部（キロっく＝たいいく部とけいぞく部）で、その部にも並べる
+    return it.get("group") == key or key in (it.get("also") or [])
+
+
 def clubs(data):
     items = [it for it in data.get("items", []) if it.get("url") and it.get("name")]
     groups = list(data.get("groups", []))
@@ -43,13 +48,14 @@ def clubs(data):
         groups.append({"key": "other", "label": "そのほか", "desc": ""})
     out = []
     for g in groups:
-        members = [it for it in items if it.get("group") == g["key"] or (g["key"] == "other" and it in rest)]
+        # 兼部のツールは、その部のもとからのツールのあと
+        members = rest if g["key"] == "other" else sorted((it for it in items if in_club(it, g["key"])), key=lambda it: it.get("group") != g["key"])
         if members:
             out.append((g, members))
     return out, {it["key"]: it for it in items}
 
 
-def card(it, by_key):
+def card(it, by_key, club):
     nxt = it.get("next") or {}
     target = by_key.get(nxt.get("key"))
     s = (
@@ -57,7 +63,9 @@ def card(it, by_key):
         f'<a class="q-main" href="{e(it["url"])}">'
         f'<img src="{e(it.get("appIcon"))}" alt="" width="48" height="48" loading="lazy">'
         '<span class="q-body">'
-        f'<span class="q-name">{e(it.get("name"))} <small>{e(it.get("en"))}</small></span>'
+        f'<span class="q-name">{e(it.get("name"))} <small>{e(it.get("en"))}</small>'
+        + ('<span class="q-also">兼部</span>' if it.get("group") != club else "")
+        + "</span>"
         f'<span class="q-copy">{e(it.get("copy"))}</span>'
         f'<span class="q-lead">{e(it.get("lead") or it.get("desc"))}</span>'
         "</span></a>"
@@ -79,7 +87,7 @@ def render(data):
             f'  <section class="club" id="club-{e(g["key"])}">'
             f'<h2 class="club-head">{e(g.get("label"))}</h2>'
             + (f'<p class="club-desc">{e(g.get("desc"))}</p>' if g.get("desc") else "")
-            + '<ul class="q-list">' + "".join(card(it, by_key) for it in members) + "</ul></section>"
+            + '<ul class="q-list">' + "".join(card(it, by_key, g["key"]) for it in members) + "</ul></section>"
         )
     parts.append("</div>")
     snapshot = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
@@ -101,7 +109,7 @@ def main():
     if n != 1:
         raise SystemExit("index.html に <!-- qlove:start --> … <!-- qlove:end --> がありません")
     page.write_text(s, encoding="utf-8")
-    print(f"ツール {count} 件を書きこみました")
+    print(f"ツール {count} 件（兼部をふくむ）を書きこみました")
 
 
 if __name__ == "__main__":
