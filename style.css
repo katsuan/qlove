@@ -45,6 +45,8 @@ a { color: inherit; }
 }
 .hub-copy { color: var(--ls-accent-ink); font-size: 14px; font-weight: 800; }
 .hub-lead, .q-lead { color: var(--ls-subtext); font-size: 13px; line-height: 1.6; }
+/* 言葉の途中で折らない（手で書いた説明の文を、文節ごとに包む。Safari でも効く） */
+.nw { white-space: nowrap; }
 
 /* ---- 部の目次 ---- */
 .club-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)); gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; }
@@ -78,6 +80,7 @@ a { color: inherit; }
 
 .foot { margin-top: 20px; color: var(--ls-subtext); font-size: 12px; text-align: center; }
 .foot p { margin: 4px 0; }
+.foot a { display: inline-flex; align-items: center; min-height: 44px; } /* 押せる高さ（q-oqrn docs/ux.md C3） */
 
 @media (prefers-color-scheme: dark) {
   :root[data-ls-dark="auto"] body { background: var(--ls-bg); }
