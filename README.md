@@ -16,3 +16,13 @@ python3 tools/build.py
 ```
 
 手元に `../q-oqrn` があればそれを、なければ公開中の `hub-links.json` を読みます。
+
+## ファイル
+
+| 名前 | 役わり |
+|---|---|
+| `index.html` | ページ（JS がなくても見える一覧の控えつき） |
+| `app.js` | 最新の一覧を読んで描きなおす・最近つかったツール |
+| `style.css` | 見た目（共通の部品はおくるんの `shared/ui.css`） |
+| `tools/build.py` | `index.html` の一覧の控えを書きなおす |
+| `test/` | テスト（`node --test test/`） |

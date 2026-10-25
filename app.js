@@ -89,6 +89,7 @@
     } catch {
       return; // 覚えられない環境では出さない
     }
+    if (!Array.isArray(recent)) return; // 中身が壊れていたら出さない
     const byKey = new Map((data.items || []).map((it) => [it.key, it]));
     const tools = recent.map((row) => row && byKey.get(row.key)).filter(Boolean).slice(0, 6);
     const list = document.getElementById("recentList");
