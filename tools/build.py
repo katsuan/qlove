@@ -19,6 +19,7 @@ URL = "https://katsuan.github.io/line-share/data/hub-links.json"
 
 
 def load():
+    """一覧（hub-links.json）を読む。手元の ../q-oqrn があればそれ、なければ公開中のもの"""
     if LOCAL.exists():
         return json.loads(LOCAL.read_text(encoding="utf-8"))
     with urllib.request.urlopen(URL, timeout=10) as res:
@@ -26,20 +27,24 @@ def load():
 
 
 def e(value):
+    """HTML に入れる文字を、タグとして動かないようにする"""
     return html.escape(str(value or ""), quote=True)
 
 
 def short_label(label):
+    """部の名前から「〜…〜」を外した短い名前"""
     # 「💪 たいいく部 〜taiiQ部〜」→「💪 たいいく部」（目次は短く）
     return re.sub(r"\s*〜.*〜\s*$", "", label or "")
 
 
 def in_club(it, key):
+    """その部のツールか（兼部も含む）"""
     # group が元の部。also は兼部（キロっく＝たいいく部とけいぞく部）で、その部にも並べる
     return it.get("group") == key or key in (it.get("also") or [])
 
 
 def clubs(data):
+    """部ごとのツールの並び（兼部はその部のツールのあと）と、key からツールを引く表を返す"""
     items = [it for it in data.get("items", []) if it.get("url") and it.get("name")]
     groups = list(data.get("groups", []))
     known = {g["key"] for g in groups}
@@ -56,6 +61,7 @@ def clubs(data):
 
 
 def card(it, by_key):
+    """ツールのカード1枚の HTML"""
     nxt = it.get("next") or {}
     target = by_key.get(nxt.get("key"))
     s = (
@@ -79,6 +85,7 @@ def card(it, by_key):
 
 
 def render(data):
+    """部の目次と、部ごとのカードの HTML"""
     groups, by_key = clubs(data)
     nav = "".join(f'<li><a href="#club-{e(g["key"])}">{e(short_label(g.get("label")))}</a></li>' for g, _ in groups)
     parts = [f'<div id="clubs">\n  <ul class="club-nav" aria-label="部の目次">{nav}</ul>']
@@ -96,6 +103,7 @@ def render(data):
 
 
 def main():
+    """index.html の一覧と控えを書きなおす（python3 tools/build.py）"""
     data = load()
     body, count = render(data)
     page = ROOT / "index.html"

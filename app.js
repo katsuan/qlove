@@ -1,4 +1,4 @@
-// くらぶ 〜Qlove〜 の入口。
+// くらぶ 〜Qlove〜 のページの動き（index.html が読む）。
 // 1. 最新の一覧（おくるんの data/hub-links.json）を読み、tools/build.py が書きこんだ控えとちがえば描きなおす
 // 2. ツールが覚えた「最近つかった」（localStorage の conneqt:recent。どのツールも katsuan.github.io の下なので読める）を上に出す
 // カードの形は tools/build.py の render と同じにする。
@@ -7,6 +7,7 @@
 
   const HUB_URL = "https://katsuan.github.io/line-share/data/hub-links.json";
 
+  // 要素を作る（attrs の text は中身の文字、ほかは属性。children を中に入れる）
   function el(tag, attrs, children) {
     const node = document.createElement(tag);
     for (const [name, value] of Object.entries(attrs || {})) {
@@ -18,11 +19,13 @@
     return node;
   }
 
+  // 部の名前から「〜…〜」を外した短い名前（目次に使う）
   const shortLabel = (label) => String(label || "").replace(/\s*〜.*〜\s*$/, "");
 
   // group が元の部。also は兼部（キロっく＝たいいく部とけいぞく部）で、その部にも並べる
   const inClub = (it, key) => it.group === key || (Array.isArray(it.also) && it.also.includes(key));
 
+  // 部ごとのツールの並び（兼部はその部のツールのあと）と、key からツールを引く表を返す
   function clubs(data) {
     const items = (data.items || []).filter((it) => it && it.url && it.name);
     const groups = [...(data.groups || [])];
@@ -35,6 +38,7 @@
     return { groups: out, byKey: new Map(items.map((it) => [it.key, it])) };
   }
 
+  // ツールのカード1枚（押すとツールを開く。つぎにおすすめがあれば下に）
   function card(it, byKey) {
     const li = el("li", { class: "q-card", style: `--q: ${it.qColor || it.color || ""}` }, [
       el("a", { class: "q-main", href: it.url }, [
@@ -63,6 +67,7 @@
     return li;
   }
 
+  // 最新の一覧で、部の目次とカードを描きなおす
   function render(data) {
     const { groups, byKey } = clubs(data);
     const root = el("div", { id: "clubs" }, [
@@ -82,6 +87,7 @@
     document.getElementById("clubs").replaceWith(root);
   }
 
+  // 端末に覚えた「最近つかった」ツールを上に出す（壊れていれば出さない）
   function showRecent(data) {
     let recent = [];
     try {

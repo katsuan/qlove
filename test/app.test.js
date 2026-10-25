@@ -9,8 +9,10 @@ const vm = require("node:vm");
 
 const SOURCE = fs.readFileSync(path.join(__dirname, "../app.js"), "utf8");
 
+// 偽の画面と端末の記録の上で app.js を動かし、画面の部品（nodes）を返す
 function run(recent) {
   const nodes = {};
+  // 画面の要素の偽物
   const make = (tag) => ({
     tag, children: [], attrs: {}, hidden: true, textContent: "",
     setAttribute(k, v) { this.attrs[k] = v; },
