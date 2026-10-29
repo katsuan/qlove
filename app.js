@@ -97,7 +97,8 @@
     }
     if (!Array.isArray(recent)) return; // 中身が壊れていたら出さない
     const byKey = new Map((data.items || []).map((it) => [it.key, it]));
-    const tools = recent.map((row) => row && byKey.get(row.key)).filter(Boolean).slice(0, 6);
+    // 同じツールが2回覚えられていても1つだけ
+    const tools = [...new Set(recent.map((row) => row && byKey.get(row.key)).filter(Boolean))].slice(0, 6);
     const list = document.getElementById("recentList");
     list.replaceChildren(
       ...tools.map((it) =>

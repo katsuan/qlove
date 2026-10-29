@@ -48,3 +48,8 @@ test("最近つかった：端末の中身が壊れていても（配列でな�
     assert.equal(nodes.recent.hidden, true);
   }
 });
+
+test("最近つかった：同じツールが2回覚えられていても1つだけ出す", () => {
+  const nodes = run('[{"key":"qji"},{"key":"qji"},{"key":"none"}]');
+  assert.equal(nodes.recentList.children.length, 1);
+});
