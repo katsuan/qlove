@@ -17,6 +17,8 @@ body {
 a { color: inherit; }
 
 /* ---- 最近つかった（ツールが覚えた conneqt:recent） ---- */
+/* 並びが画面より長いときは、ページを横にのばさず、この列の中だけ横にすべらせる */
+.recent { min-width: 0; }
 .recent-title { margin: 0 0 6px; color: var(--ls-subtext); font-size: 12px; font-weight: 700; }
 .recent-list { display: flex; gap: 10px; margin: 0; padding: 0; list-style: none; overflow-x: auto; }
 .recent-list a {
