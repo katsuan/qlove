@@ -35,13 +35,16 @@ a { color: inherit; }
 }
 .hub-card {
   padding: 16px; border-radius: var(--ls-radius-lg);
-  background: var(--ls-surface); border: 1px solid var(--ls-line);
+  background: var(--ls-surface); border: 2px solid var(--ls-accent);
 }
 .hub-card img { width: 48px; height: 48px; border-radius: 12px; }
 .hub-body, .q-body { display: grid; gap: 4px; min-width: 0; }
 .hub-name, .q-name { font-size: 17px; font-weight: 800; line-height: 1.4; }
 .hub-name small, .q-name small { margin-left: 4px; color: var(--ls-subtext); font-size: 12px; font-weight: 700; }
-.hub-tag { margin-left: 8px; color: var(--ls-subtext); font-size: 12px; font-weight: 700; }
+.hub-tag {
+  display: inline-block; margin-left: 8px; padding: 0 8px; border-radius: 999px; vertical-align: 2px;
+  background: var(--ls-accent-soft); color: var(--ls-accent-ink); font-size: 11px; font-weight: 800;
+}
 .hub-copy { color: var(--ls-accent-ink); font-size: 14px; font-weight: 800; }
 .hub-lead, .q-lead { color: var(--ls-subtext); font-size: 13px; line-height: 1.6; }
 /* 言葉の途中で折らない（手で書いた説明の文を、文節ごとに包む。Safari でも効く） */
@@ -62,12 +65,14 @@ a { color: inherit; }
 @media (min-width: 720px) { .q-list { grid-template-columns: 1fr 1fr; } }
 .q-card {
   display: grid; gap: 8px; padding: 16px; border-radius: var(--ls-radius-md);
-  background: var(--ls-surface); border: 1px solid var(--ls-line);
+  background: var(--ls-surface); border: 1px solid var(--ls-line); border-left: 5px solid var(--q, var(--ls-accent));
 }
-/* ツールの色はアイコンだけ。名前・ひとこと・説明は、字の濃さと太さで分ける */
 .q-main img { width: 48px; height: 48px; border-radius: 12px; }
-.q-also { margin-left: 8px; color: var(--ls-subtext); font-size: 12px; font-weight: 700; }
-.q-copy { color: var(--ls-text); font-size: 14px; font-weight: 700; }
+.q-also {
+  display: inline-block; margin-left: 8px; padding: 0 8px; border-radius: 999px; vertical-align: 2px;
+  background: var(--ls-surface-sub); border: 1px solid var(--ls-line); color: var(--ls-subtext); font-size: 10px; font-weight: 700;
+}
+.q-copy { color: var(--q, var(--ls-accent-ink)); font-size: 14px; font-weight: 800; }
 .q-next {
   display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 16px; border-radius: var(--ls-radius-sm);
   background: var(--ls-surface-sub); color: var(--ls-subtext); font-size: 12px; line-height: 1.5; text-decoration: none;
@@ -80,4 +85,6 @@ a { color: inherit; }
 
 @media (prefers-color-scheme: dark) {
   :root[data-ls-dark="auto"] body { background: var(--ls-bg); }
+  /* ツールの色は濃いものが多いので、暗い背景では明るくして読めるように */
+  :root[data-ls-dark="auto"] .q-copy { color: color-mix(in srgb, var(--q, #8f74ff) 55%, white); }
 }
