@@ -3,7 +3,7 @@
 
 一覧は、おくるん（line-share）の data/hub-links.json。手元に ../q-oqrn があればそれを、なければ公開中のものを読む。
 書きこんだ一覧の元データも index.html に控えておき、開いたときに app.js が最新の hub-links.json と比べて、
-ちがえば app.js が同じ形で描きなおす（カードの形を変えたら app.js の render もそろえる）。
+ちがえば app.js が同じ形で描きなおす（カードの形を変えたら app.js の render もそろえる。test/cards.test.js で確かめる）。
 
   python3 tools/build.py
 """

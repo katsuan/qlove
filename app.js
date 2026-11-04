@@ -1,7 +1,7 @@
 // くらぶ 〜Qlove〜 のページの動き（index.html が読む）。
 // 1. 最新の一覧（おくるんの data/hub-links.json）を読み、tools/build.py が書きこんだ控えとちがえば描きなおす
 // 2. ツールが覚えた「最近つかった」（localStorage の conneqt:recent。どのツールも katsuan.github.io の下なので読める）を上に出す
-// カードの形は tools/build.py の render と同じにする。
+// カードの形は tools/build.py の render と同じにする（test/cards.test.js で確かめる）。
 (function () {
   "use strict";
 
