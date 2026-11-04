@@ -7,7 +7,7 @@
 html { background: var(--ls-bg); }
 body {
   margin: 0;
-  background: radial-gradient(circle at top right, #e3dbff, transparent 40%), var(--ls-bg);
+  background: var(--ls-bg); /* 背景は平らな1色（グラデーションにしない） */
   color: var(--ls-text);
   font-family: var(--ls-font);
   -webkit-font-smoothing: antialiased;
@@ -19,73 +19,65 @@ a { color: inherit; }
 /* ---- 最近つかった（ツールが覚えた conneqt:recent） ---- */
 /* 並びが画面より長いときは、ページを横にのばさず、この列の中だけ横にすべらせる */
 .recent { min-width: 0; }
-.recent-title { margin: 0 0 6px; color: var(--ls-subtext); font-size: 12px; font-weight: 700; }
-.recent-list { display: flex; gap: 10px; margin: 0; padding: 0; list-style: none; overflow-x: auto; }
+.recent-title { margin: 0 0 8px; color: var(--ls-subtext); font-size: 12px; font-weight: 700; }
+.recent-list { display: flex; gap: 8px; margin: 0; padding: 0; list-style: none; overflow-x: auto; }
 .recent-list a {
   display: grid; justify-items: center; gap: 4px; width: 64px;
   font-size: 11px; font-weight: 700; text-decoration: none; text-align: center; line-height: 1.3;
 }
-.recent-list img { width: 44px; height: 44px; border-radius: 12px; background: var(--ls-surface); box-shadow: var(--ls-shadow); }
+.recent-list img { width: 48px; height: 48px; border-radius: 12px; background: var(--ls-surface); border: 1px solid var(--ls-line); }
 
 /* ---- おくるん（入口のいちばん上） ---- */
 .hub-card,
 .q-main {
-  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start;
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: start;
   text-decoration: none;
 }
 .hub-card {
   padding: 16px; border-radius: var(--ls-radius-lg);
-  background: var(--ls-surface); border: 2px solid var(--ls-accent); box-shadow: var(--ls-shadow);
+  background: var(--ls-surface); border: 1px solid var(--ls-line);
 }
-.hub-card img { width: 52px; height: 52px; border-radius: 14px; }
-.hub-body, .q-body { display: grid; gap: 2px; min-width: 0; }
+.hub-card img { width: 48px; height: 48px; border-radius: 12px; }
+.hub-body, .q-body { display: grid; gap: 4px; min-width: 0; }
 .hub-name, .q-name { font-size: 17px; font-weight: 800; line-height: 1.4; }
 .hub-name small, .q-name small { margin-left: 4px; color: var(--ls-subtext); font-size: 12px; font-weight: 700; }
-.hub-tag {
-  display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 999px; vertical-align: 2px;
-  background: var(--ls-accent-soft); color: var(--ls-accent-ink); font-size: 11px; font-weight: 800;
-}
+.hub-tag { margin-left: 8px; color: var(--ls-subtext); font-size: 12px; font-weight: 700; }
 .hub-copy { color: var(--ls-accent-ink); font-size: 14px; font-weight: 800; }
 .hub-lead, .q-lead { color: var(--ls-subtext); font-size: 13px; line-height: 1.6; }
 /* 言葉の途中で折らない（手で書いた説明の文を、文節ごとに包む。Safari でも効く） */
 .nw { white-space: nowrap; }
 
 /* ---- 部の目次 ---- */
-.club-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)); gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; }
+.club-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; margin: 8px 0 0; padding: 0; list-style: none; }
 .club-nav a {
-  display: flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 4px; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 8px; border-radius: 999px;
   background: var(--ls-surface); border: 1px solid var(--ls-line); font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap;
 }
 
 /* ---- 部とツールのカード ---- */
-.club { display: grid; gap: 10px; scroll-margin-top: 12px; }
-.club-head { margin: 12px 0 0; font-size: 18px; font-weight: 800; }
-.club-desc { margin: -6px 0 0; color: var(--ls-subtext); font-size: 13px; }
-.q-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.club { display: grid; gap: 8px; scroll-margin-top: 16px; }
+.club-head { margin: 16px 0 0; font-size: 18px; font-weight: 800; }
+.club-desc { margin: 0 0 8px; color: var(--ls-subtext); font-size: 13px; }
+.q-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 @media (min-width: 720px) { .q-list { grid-template-columns: 1fr 1fr; } }
 .q-card {
-  display: grid; gap: 10px; padding: 14px; border-radius: var(--ls-radius-md);
-  background: var(--ls-surface); border: 1px solid var(--ls-line); border-left: 5px solid var(--q, var(--ls-accent));
-  box-shadow: var(--ls-shadow);
+  display: grid; gap: 8px; padding: 16px; border-radius: var(--ls-radius-md);
+  background: var(--ls-surface); border: 1px solid var(--ls-line);
 }
+/* ツールの色はアイコンだけ。名前・ひとこと・説明は、字の濃さと太さで分ける */
 .q-main img { width: 48px; height: 48px; border-radius: 12px; }
-.q-also {
-  display: inline-block; margin-left: 6px; padding: 0 7px; border-radius: 999px; vertical-align: 2px;
-  background: var(--ls-surface-sub); border: 1px solid var(--ls-line); color: var(--ls-subtext); font-size: 10px; font-weight: 700;
-}
-.q-copy { color: var(--q, var(--ls-accent-ink)); font-size: 14px; font-weight: 800; }
+.q-also { margin-left: 8px; color: var(--ls-subtext); font-size: 12px; font-weight: 700; }
+.q-copy { color: var(--ls-text); font-size: 14px; font-weight: 700; }
 .q-next {
-  display: flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 10px; border-radius: var(--ls-radius-sm);
+  display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 16px; border-radius: var(--ls-radius-sm);
   background: var(--ls-surface-sub); color: var(--ls-subtext); font-size: 12px; line-height: 1.5; text-decoration: none;
 }
 .q-next b { color: var(--ls-text); font-weight: 800; white-space: nowrap; }
 
-.foot { margin-top: 20px; color: var(--ls-subtext); font-size: 12px; text-align: center; }
-.foot p { margin: 4px 0; }
+.foot { margin-top: 32px; color: var(--ls-subtext); font-size: 12px; }
+.foot p { margin: 8px 0; }
 .foot a { display: inline-flex; align-items: center; min-height: 44px; } /* 押せる高さ（q-oqrn docs/ux.md C3） */
 
 @media (prefers-color-scheme: dark) {
   :root[data-ls-dark="auto"] body { background: var(--ls-bg); }
-  /* ツールの色は濃いものが多いので、暗い背景では明るくして読めるように */
-  :root[data-ls-dark="auto"] .q-copy { color: color-mix(in srgb, var(--q, #8f74ff) 55%, white); }
 }
