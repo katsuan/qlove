@@ -78,7 +78,7 @@ def card(it, by_key):
     )
     if target:
         s += (
-            f'<a class="q-next" href="{e(target["url"])}"><span aria-hidden="true">→</span>'
+            f'<a class="q-next" href="{e(target["url"])}"><span class="ls-icon" data-icon="next" aria-hidden="true"></span>'
             f'<span>つぎに <b>{e(target.get("name"))}</b>：{e(nxt.get("why"))}</span></a>'
         )
     return s + "</li>"

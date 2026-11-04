@@ -59,7 +59,7 @@
     if (target) {
       li.append(
         el("a", { class: "q-next", href: target.url }, [
-          el("span", { "aria-hidden": "true", text: "→" }),
+          el("span", { class: "ls-icon", "data-icon": "next", "aria-hidden": "true" }), // Q キットの線アイコン
           el("span", {}, [document.createTextNode("つぎに "), el("b", { text: target.name }), document.createTextNode(`：${next.why || ""}`)])
         ])
       );
