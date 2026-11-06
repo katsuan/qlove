@@ -79,3 +79,10 @@ a { color: inherit; }
   /* ツールの色は濃いものが多いので、暗い背景では明るくして読めるように */
   :root[data-ls-dark="auto"] .q-copy { color: color-mix(in srgb, var(--q, #8f74ff) 55%, white); }
 }
+
+/* 引っこしの案内（?moved=）：アイコンと見出しを1行に、その下に説明と新しい入口のボタン */
+.moved { display: grid; gap: 8px; }
+.moved[hidden] { display: none; }
+.moved-head { display: flex; align-items: center; gap: 8px; }
+.moved-head img { flex: 0 0 auto; border-radius: 8px; }
+.moved-title { margin: 0; font-size: 16px; font-weight: 700; }

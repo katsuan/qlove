@@ -109,6 +109,46 @@
     document.getElementById("recent").hidden = tools.length === 0;
   }
 
+  // 引っこしたツール（前の LIFF のエンドポイントを https://katsuan.github.io/qlove/?moved=<key> にしておく）。
+  // 前のカードのボタンの続き（?menu=… など）は、LINE が liff.state で渡すので、新しい LIFF のリンクに付けなおす
+  const MOVED = {
+    oqrn: { name: "おくるん", liffId: "2012187502-8NqYx6DQ", icon: "https://katsuan.github.io/oqrn/shared/icon.svg" },
+    hiqri: { name: "ひっくり", liffId: "2012187502-gUp90W4L", icon: "https://katsuan.github.io/hiqri/assets/icon.svg" },
+    kiloq: { name: "キロっく", liffId: "2012187502-SXNrASOl", icon: "https://katsuan.github.io/kiloq/icon.svg" },
+    qurukana: { name: "くるかな", liffId: "2012187502-a9XgrS1M", icon: "https://katsuan.github.io/qurukana/icon.svg" }
+  };
+
+  // 新しい LIFF のリンク。続き（liff.state）は「/」か「?」ではじまり、liff.line.me のその LIFF の中に収まるものだけ付ける
+  function movedUrl(liffId, state) {
+    const base = "https://liff.line.me/" + liffId;
+    if (!state || !/^[/?]/.test(state) || state.startsWith("//")) return base;
+    try {
+      const url = new URL(base + state);
+      return url.origin === "https://liff.line.me" && url.pathname.startsWith("/" + liffId) ? url.href : base;
+    } catch {
+      return base;
+    }
+  }
+
+  // ?moved=<key> で開かれたら、上に引っこしの案内と、新しい入口のボタンを出す
+  function showMoved() {
+    const params = new URLSearchParams(location.search);
+    const tool = MOVED[params.get("moved") || ""];
+    const box = document.getElementById("moved");
+    if (!tool || !box) return;
+    const href = movedUrl(tool.liffId, params.get("liff.state") || "");
+    box.replaceChildren(
+      el("div", { class: "moved-head" }, [
+        el("img", { src: tool.icon, alt: "", width: "40", height: "40" }),
+        el("p", { class: "moved-title", text: tool.name + "は引っこしました" })
+      ]),
+      el("p", { class: "ls-hint", text: "新しい入口から開きなおしてください。前のカードから来たときは、その中身も持っていきます。" }),
+      el("a", { class: "ls-button is-primary is-block", href: href, text: tool.name + "を開く" })
+    );
+    box.hidden = false;
+  }
+  showMoved();
+
   let snapshot = {};
   try {
     snapshot = JSON.parse(document.getElementById("hubSnapshot").textContent);
