@@ -132,6 +132,7 @@
 
   // ?moved=<key> で開かれたら、上に引っこしの案内と、新しい入口のボタンを出す
   function showMoved() {
+    if (typeof location === "undefined" || typeof URLSearchParams === "undefined") return; // 住所の読めないところ（テストの偽の画面など）では出さない
     const params = new URLSearchParams(location.search);
     const tool = MOVED[params.get("moved") || ""];
     const box = document.getElementById("moved");
