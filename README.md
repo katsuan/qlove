@@ -6,7 +6,7 @@ https://katsuan.github.io/qlove/
 
 ## 一覧の更新
 
-ツールの一覧は、おくるん（[line-share](https://github.com/katsuan/line-share)）の `data/hub-links.json` が元です。
+ツールの一覧は、おくるん（[oqrn](https://github.com/katsuan/oqrn)）の `data/hub-links.json` が元です。
 
 - ページを開くと `app.js` が公開中の `hub-links.json` を読み、書きこんである一覧とちがえば描きなおします。
 - JS がなくても見えるよう、`index.html` にも一覧を書きこんであります。ツールを足したら書きなおします。

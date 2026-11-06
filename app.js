@@ -5,7 +5,7 @@
 (function () {
   "use strict";
 
-  const HUB_URL = "https://katsuan.github.io/line-share/data/hub-links.json";
+  const HUB_URL = "https://katsuan.github.io/oqrn/data/hub-links.json";
 
   // 要素を作る（attrs の text は中身の文字、ほかは属性。children を中に入れる）
   // 値のない属性（null・undefined）は付けない。空の文字は付ける（画像の alt="" は「読み上げない」の印なので、tools/build.py と同じに残す）

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """部の一覧とツールのカードを index.html に書きこむ（JS がなくても・読みこみに失敗しても見えるように）。
 
-一覧は、おくるん（line-share）の data/hub-links.json。手元に ../q-oqrn があればそれを、なければ公開中のものを読む。
+一覧は、おくるん（oqrn）の data/hub-links.json。手元に ../q-oqrn があればそれを、なければ公開中のものを読む。
 書きこんだ一覧の元データも index.html に控えておき、開いたときに app.js が最新の hub-links.json と比べて、
 ちがえば app.js が同じ形で描きなおす（カードの形を変えたら app.js の render もそろえる。test/cards.test.js で確かめる）。
 
@@ -15,7 +15,7 @@ import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 LOCAL = ROOT.parent / "q-oqrn" / "data" / "hub-links.json"
-URL = "https://katsuan.github.io/line-share/data/hub-links.json"
+URL = "https://katsuan.github.io/oqrn/data/hub-links.json"
 
 
 def load():

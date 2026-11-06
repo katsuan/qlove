@@ -1,4 +1,4 @@
-/* くらぶ 〜Qlove〜 の入口。部品は Q キット（https://katsuan.github.io/line-share/shared/ui.css）。
+/* くらぶ 〜Qlove〜 の入口。部品は Q キット（https://katsuan.github.io/oqrn/shared/ui.css）。
  * ここには Qlove の字と、入口にしかない見た目（部の目次・ツールのカード・最近つかった）だけを置く */
 :root {
   --ls-font: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", system-ui, sans-serif;
