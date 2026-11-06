@@ -120,7 +120,10 @@
     hiqri: { name: "ひっくり", icon: "https://katsuan.github.io/hiqri/assets/icon.svg", web: "https://katsuan.github.io/hiqri/", liff: "https://liff.line.me/2012187502-gUp90W4L" },
     kiloq: { name: "キロっく", icon: "https://katsuan.github.io/kiloq/icon.svg", web: "https://katsuan.github.io/kiloq/", liff: "https://liff.line.me/2012187502-SXNrASOl" },
     qurukana: { name: "くるかな", icon: "https://katsuan.github.io/qurukana/icon.svg", web: "https://katsuan.github.io/qurukana/", liff: "https://liff.line.me/2012187502-a9XgrS1M" },
-    qronos: { name: "くろのす", icon: "https://katsuan.github.io/qronos/icon.svg", web: "https://katsuan.github.io/qronos/" }
+    qronos: { name: "くろのす", icon: "https://katsuan.github.io/qronos/icon.svg", web: "https://katsuan.github.io/qronos/" },
+    saqsen: { name: "さくせん盤", icon: "https://katsuan.github.io/saqsen/icon.svg", web: "https://katsuan.github.io/saqsen/" },
+    roqga: { name: "ろくが", icon: "https://katsuan.github.io/roqga/icon.svg", web: "https://katsuan.github.io/roqga/" },
+    babyq: { name: "ジェンダーリビール", icon: "https://katsuan.github.io/babyq/icon.svg", web: "https://katsuan.github.io/babyq/" }
   };
 
   // 新しい入口の URL。続き（extra）は「/」か「?」ではじまり、新しい入口（base）の中に収まるものだけ付ける
