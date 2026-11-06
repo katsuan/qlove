@@ -109,22 +109,29 @@
     document.getElementById("recent").hidden = tools.length === 0;
   }
 
-  // 引っこしたツール（前の LIFF のエンドポイントを https://katsuan.github.io/qlove/?moved=<key> にしておく）。
-  // 前のカードのボタンの続き（?menu=… など）は、LINE が liff.state で渡すので、新しい LIFF のリンクに付けなおす
+  // 引っこしたツール。前の入口から来た人に、上に引っこしの案内と新しい入口のボタンを出す（?moved=<key>）
+  //   前の LIFF：エンドポイントを https://katsuan.github.io/qlove/?moved=<key> にしておく。前のカードのボタンの続き（?menu=… など）は
+  //     LINE が liff.state で渡すので、新しい LIFF のリンクに付けなおす
+  //   前の repo 名（GitHub Pages の住所）：古い名前の repo に置いた案内のページが、ここへ ?moved=<key>&rest=<続き> で送ってくる。
+  //     続き（/create.html?… など）は、新しい住所に付けなおす
+  // ツールの名前を変えたら、ここに1行足す（web は新しい住所、liff は LIFF があれば）
   const MOVED = {
-    oqrn: { name: "おくるん", liffId: "2012187502-8NqYx6DQ", icon: "https://katsuan.github.io/oqrn/shared/icon.svg" },
-    hiqri: { name: "ひっくり", liffId: "2012187502-gUp90W4L", icon: "https://katsuan.github.io/hiqri/assets/icon.svg" },
-    kiloq: { name: "キロっく", liffId: "2012187502-SXNrASOl", icon: "https://katsuan.github.io/kiloq/icon.svg" },
-    qurukana: { name: "くるかな", liffId: "2012187502-a9XgrS1M", icon: "https://katsuan.github.io/qurukana/icon.svg" }
+    oqrn: { name: "おくるん", icon: "https://katsuan.github.io/oqrn/shared/icon.svg", web: "https://katsuan.github.io/oqrn/", liff: "https://liff.line.me/2012187502-8NqYx6DQ" },
+    hiqri: { name: "ひっくり", icon: "https://katsuan.github.io/hiqri/assets/icon.svg", web: "https://katsuan.github.io/hiqri/", liff: "https://liff.line.me/2012187502-gUp90W4L" },
+    kiloq: { name: "キロっく", icon: "https://katsuan.github.io/kiloq/icon.svg", web: "https://katsuan.github.io/kiloq/", liff: "https://liff.line.me/2012187502-SXNrASOl" },
+    qurukana: { name: "くるかな", icon: "https://katsuan.github.io/qurukana/icon.svg", web: "https://katsuan.github.io/qurukana/", liff: "https://liff.line.me/2012187502-a9XgrS1M" },
+    qronos: { name: "くろのす", icon: "https://katsuan.github.io/qronos/icon.svg", web: "https://katsuan.github.io/qronos/" }
   };
 
-  // 新しい LIFF のリンク。続き（liff.state）は「/」か「?」ではじまり、liff.line.me のその LIFF の中に収まるものだけ付ける
-  function movedUrl(liffId, state) {
-    const base = "https://liff.line.me/" + liffId;
-    if (!state || !/^[/?]/.test(state) || state.startsWith("//")) return base;
+  // 新しい入口の URL。続き（extra）は「/」か「?」ではじまり、新しい入口（base）の中に収まるものだけ付ける
+  function movedUrl(base, extra) {
+    const root = base.replace(/\/$/, "");
+    if (!extra || !/^[/?]/.test(extra) || extra.startsWith("//")) return base;
     try {
-      const url = new URL(base + state);
-      return url.origin === "https://liff.line.me" && url.pathname.startsWith("/" + liffId) ? url.href : base;
+      const url = new URL(root + extra);
+      const start = new URL(root);
+      const inside = url.pathname === start.pathname || url.pathname.startsWith(start.pathname.replace(/\/$/, "") + "/");
+      return url.origin === start.origin && inside ? url.href : base;
     } catch {
       return base;
     }
@@ -137,7 +144,9 @@
     const tool = MOVED[params.get("moved") || ""];
     const box = document.getElementById("moved");
     if (!tool || !box) return;
-    const href = movedUrl(tool.liffId, params.get("liff.state") || "");
+    // 前の repo 名の住所から来たら（rest）新しい住所へ、前の LIFF から来たら新しい LIFF へ
+    const rest = params.get("rest");
+    const href = rest !== null || !tool.liff ? movedUrl(tool.web, rest || "") : movedUrl(tool.liff, params.get("liff.state") || "");
     box.replaceChildren(
       el("div", { class: "moved-head" }, [
         el("img", { src: tool.icon, alt: "", width: "40", height: "40" }),
