@@ -143,7 +143,7 @@
         el("img", { src: tool.icon, alt: "", width: "40", height: "40" }),
         el("p", { class: "moved-title", text: tool.name + "は引っこしました" })
       ]),
-      el("p", { class: "ls-hint", text: "新しい入口から開きなおしてください。前のカードから来たときは、その中身も持っていきます。" }),
+      el("p", { class: "ls-hint", text: "下のボタンから開きなおしてください。" }),
       el("a", { class: "ls-button is-primary is-block", href: href, text: tool.name + "を開く" })
     );
     box.hidden = false;
